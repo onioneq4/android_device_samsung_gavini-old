@@ -123,6 +123,8 @@ on post-fs
     chown radio system /sys/class/sec/sec_touchkey/touch_sensitivity
     chown system radio /sys/class/sec/sec_touchscreen/tsp_firm_version_panel
     chown system radio /sys/class/sec/sec_touchscreen/tsp_firm_version_phone
+    chown system radio /sys/class/sec/tsp_noise_test/disp_all_refdata
+    chown system radio /sys/class/sec/tsp_noise_test/disp_all_deltadata
 
     # DVFS LOCK
     chown radio system /sys/power/cpufreq_table
@@ -365,7 +367,7 @@ on boot
     # camera debug 
     setprop persist.debug.extcamera.level 777
     setprop persist.debug.mmiocamera.level 777
-    setprop debug.libcamera.trace 666	
+    setprop debug.libcamera.trace 666
 
     # Battery
     chown system system /sys/class/power_supply/battery/batt_vol_adc_cal
@@ -623,3 +625,4 @@ service iprenew_bnep0 /system/bin/dhcpcd -n
     class core
     user graphics
     group input graphics
+    oneshot
