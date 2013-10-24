@@ -11,3 +11,6 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/gavini/bluetooth
 
 # Vibrator
 BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/samsung/gavini/vibrator/vibrator.c
+
+# Recovery
+TARGET_RECOVERY_INITRC := device/samsung/gavini/rootdir/recovery.rc
