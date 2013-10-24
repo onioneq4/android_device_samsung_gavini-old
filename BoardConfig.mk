@@ -5,6 +5,7 @@ TARGET_OTA_ASSERT_DEVICE := gavini,i8530,GT-I8530
 # Kernel
 TARGET_KERNEL_SOURCE := kernel/samsung/gavini
 TARGET_KERNEL_CONFIG := cyanogenmod_i8530_defconfig
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
 
 # Bluetooth
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/gavini/bluetooth
