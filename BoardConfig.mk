@@ -18,15 +18,15 @@ TARGET_NO_RADIOIMAGE := true
 
 TARGET_PROVIDES_INIT := true
 TARGET_PROVIDES_INIT_TARGET_RC := true
-TARGET_RECOVERY_INITRC := device/samsung/janice/rootdir/recovery.rc
+TARGET_RECOVERY_INITRC := device/samsung/gavini/rootdir/recovery.rc
 
-TARGET_SPECIFIC_HEADER_PATH := device/samsung/janice/overlay/include
+TARGET_SPECIFIC_HEADER_PATH := device/samsung/gavini/overlay/include
 
 BOARD_KERNEL_CMDLINE := "console=ttySAC2,115200"
 BOARD_KERNEL_BASE := 0x40000000
 BOARD_KERNEL_PAGESIZE := 4096
-TARGET_KERNEL_SOURCE := kernel/samsung/u8500
-TARGET_KERNEL_CONFIG := cyanogenmod_i9070_defconfig
+TARGET_KERNEL_SOURCE := kernel/samsung/gavini
+TARGET_KERNEL_CONFIG := cyanogenmod_i8530_defconfig
 
 # Inherit from the proprietary version
--include vendor/samsung/janice/BoardConfigVendor.mk
+-include vendor/samsung/gavini/BoardConfigVendor.mk

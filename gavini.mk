@@ -1,4 +1,4 @@
-LOCAL_PATH := device/samsung/janice
+LOCAL_PATH := device/samsung/gavini
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
@@ -9,4 +9,4 @@ PRODUCT_AAPT_PREF_CONFIG := hdpi
 
 
 # Use non-open-source parts if present
-$(call inherit-product-if-exists, vendor/samsung/janice/janice-vendor.mk)
+$(call inherit-product-if-exists, vendor/samsung/gavini/gavini-vendor.mk)
