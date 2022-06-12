@@ -94,7 +94,7 @@ BOARD_CHARGER_RES := device/samsung/gavini/res/charger
 # Releasetools
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/samsung/gavini/releasetools/gavini_ota_from_target_files
 TARGET_RELEASETOOL_IMG_FROM_TARGET_SCRIPT := device/samsung/gavini/releasetools/gavini_img_from_target_files
-BOARD_CUSTOM_BOOTIMG_MK := device/samsung/janice/shbootimg.mk
+BOARD_CUSTOM_BOOTIMG_MK := device/samsung/gavini/shbootimg.mk
 
 TARGET_OTA_ASSERT_DEVICE := gavini,i8530,GT-I8530
 

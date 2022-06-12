@@ -16,7 +16,7 @@
 
 import sys
 import os
-import janice_common as common
+import gavini_common as common
 
 LOCAL_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 RELEASETOOLS_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../build/tools/releasetools'))
@@ -31,7 +31,7 @@ filename = os.path.join(RELEASETOOLS_DIR, "ota_from_target_files")
 ota_from_target_files = common.load_module_from_file('ota_from_target_files', filename)
 
 from ota_from_target_files import *
-import janice_edify_generator as edify_generator
+import gavini_edify_generator as edify_generator
 
 __doc__ = ota_from_target_files.__doc__
 
@@ -106,11 +106,7 @@ ota_from_target_files.WriteFullOTAPackage = WriteFullOTAPackage
 
 
 def WriteIncrementalOTAPackage(target_zip, source_zip, output_zip):
-<<<<<<< HEAD:releasetools/u8500_ota_from_target_files
-    print "Incremental OTA Packages are not support on the GT-I8530 at this time"
-=======
-    print "Incremental OTA Packages are not support on the Galaxy S Advance at this time"
->>>>>>> 5464777 (proper releasetools):releasetools/janice_ota_from_target_files
+    print "Incremental OTA Packages are not supported on the Galaxy Beam at this time"
     sys.exit(1)
 ota_from_target_files.WriteIncrementalOTAPackage = WriteIncrementalOTAPackage
 
