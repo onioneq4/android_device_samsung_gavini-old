@@ -1,3 +1,6 @@
+# Include common makefile
+$(call inherit-product, device/samsung/u8500-common/common.mk)
+
 LOCAL_PATH := device/samsung/gavini
 
 # Overlay
