@@ -29,7 +29,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/fstab.samsunggavini:root/fstab.samsunggavini \
     $(LOCAL_PATH)/rootdir/init.samsunggavini.rc:root/init.samsunggavini.rc \
-    $(LOCAL_PATH)/rootdir/init.samsunggavini.usb.rc:root/init.samsunggavini.usb.rc \
     $(LOCAL_PATH)/rootdir/ueventd.samsunggavini.rc:root/ueventd.samsunggavini.rc
 
 # Gps
@@ -39,9 +38,7 @@ PRODUCT_COPY_FILES += \
 
 # Audio
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/adm.sqlite-u8500:system/etc/adm.sqlite-u8500 \
-    $(LOCAL_PATH)/configs/audio_policy.conf:system/vendor/etc/audio_policy.conf \
-    $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf
+    $(LOCAL_PATH)/configs/adm.sqlite-u8500:system/etc/adm.sqlite-u8500
 
 # RIL
 PRODUCT_COPY_FILES += \
