@@ -12,9 +12,6 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/janice/bluetooth
 # Vibrator
 BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/samsung/janice/vibrator/vibrator.c
 
-# Recovery
-TARGET_RECOVERY_FSTAB := device/samsung/janice/rootdir/fstab.samsungjanice
-
 # Hardware tunables (device parts replacement)
 BOARD_HARDWARE_CLASS := device/samsung/janice/cmhw
 
