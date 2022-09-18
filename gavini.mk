@@ -1,7 +1,7 @@
 # Include common makefile
 $(call inherit-product, device/samsung/u8500-common/common.mk)
 
-LOCAL_PATH := device/samsung/janice
+LOCAL_PATH := device/samsung/gavini
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
@@ -35,4 +35,4 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/adm.sqlite-u8500:system/etc/adm.sqlite-u8500
 
 # Use non-open-source parts if present
-$(call inherit-product-if-exists, vendor/samsung/u8500-common/janice/janice-vendor-blobs.mk)
+$(call inherit-product-if-exists, vendor/samsung/u8500-common/gavini/gavini-vendor-blobs.mk)

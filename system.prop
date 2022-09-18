@@ -1,5 +1,5 @@
 #
-# system.prop for janice
+# system.prop for gavini
 #
 
 rild.libpath=/system/lib/libsec-ril.so
@@ -29,7 +29,7 @@ ste.cam.front.orientation=270
 ste.cam.back.orientation=90
 
 # STE: Camera file path configuration
-ste.cam.ext.cfg.path.secondary=/system/usr/share/camera/config_file/samsung_s5k4ecgx_janice.dat
+ste.cam.ext.cfg.path.secondary=/system/usr/share/camera/config_file/samsung_s5k4ecgx_gavini.dat
 
 # Hardware info
 ro.device.chipset=ST-Ericsson NovaThor U8500 (45nm)

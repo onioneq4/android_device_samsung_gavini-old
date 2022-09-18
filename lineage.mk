@@ -2,7 +2,7 @@
 $(call inherit-product, vendor/cm/config/gsm.mk)
 
 # Release name
-PRODUCT_RELEASE_NAME := GT-I9070
+PRODUCT_RELEASE_NAME := GT-I8530
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 800
@@ -12,7 +12,7 @@ TARGET_SCREEN_WIDTH := 480
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 
 # Inherit device configuration
-$(call inherit-product, device/samsung/janice/full_janice.mk)
+$(call inherit-product, device/samsung/gavini/full_gavini.mk)
 
 # CM Packages
 PRODUCT_PACKAGES += \
@@ -21,11 +21,11 @@ PRODUCT_PACKAGES += \
     org.cyanogenmod.hardware.xml
 
 # Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := janice
-PRODUCT_NAME := cm_janice
+PRODUCT_DEVICE := gavini
+PRODUCT_NAME := lineage_gavini
 PRODUCT_BRAND := samsung
-PRODUCT_MODEL := GT-I9070
+PRODUCT_MODEL := GT-I8530
 PRODUCT_MANUFACTURER := samsung
 
 # Set build fingerprint / ID / Product Name ect.
-PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=GT-I9070 TARGET_DEVICE=janice
+PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=GT-I8530 TARGET_DEVICE=gavini
