@@ -25,6 +25,22 @@ PRODUCT_COPY_FILES += \
 
 $(call inherit-product, device/common/gps/gps_eu_supl.mk)
 
+# Init files
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/init.u8500.rc:root/init.u8500.rc \
+    $(LOCAL_PATH)/rootdir/init.u8500.usb.rc:root/init.u8500.usb.rc \
+    $(LOCAL_PATH)/rootdir/fstab.samsunggavini:root/fstab.samsunggavini \
+    $(LOCAL_PATH)/rootdir/init.samsunggavini.rc:root/init.samsunggavini.rc \
+    $(LOCAL_PATH)/rootdir/init.recovery.samsunggavini.rc:root/init.recovery.samsunggavini.rc \
+    $(LOCAL_PATH)/rootdir/ueventd.samsunggavini.rc:root/ueventd.samsunggavini.rc
+
+# Charger
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/lpm.rc:root/lpm.rc
+PRODUCT_PACKAGES += \
+    charger \
+    charger_res_images
+
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
@@ -35,4 +51,4 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/adm.sqlite-u8500:system/etc/adm.sqlite-u8500
 
 # Use non-open-source parts if present
-$(call inherit-product-if-exists, vendor/samsung/u8500-common/gavini/gavini-vendor-blobs.mk)
+$(call inherit-product-if-exists, vendor/samsung/gavini/gavini-vendor.mk)

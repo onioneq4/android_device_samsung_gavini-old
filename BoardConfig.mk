@@ -15,5 +15,8 @@ BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/samsung/gavini/vibrator/vibrat
 # Hardware tunables (device parts replacement)
 BOARD_HARDWARE_CLASS := device/samsung/gavini/cmhw
 
+# Recovery
+TARGET_RECOVERY_FSTAB := device/samsung/gavini/rootdir/fstab.samsunggavini
+
 # Disable legacy sensors using because gavini has gyro
 BOARD_USE_LEGACY_SENSORS_FUSION := false
