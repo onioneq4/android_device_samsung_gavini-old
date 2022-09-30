@@ -84,4 +84,6 @@
     -->
     <bool name="config_enableWifiDisplay">true</bool>
 
+    <bool name="config_hotswapCapable">false</bool>
+
 </resources>
