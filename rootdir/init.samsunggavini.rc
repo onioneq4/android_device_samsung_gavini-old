@@ -3,6 +3,7 @@ import /init.u8500.rc
 on fs
 
     mount_all /fstab.samsunggavini
+    swapon_all /fstab.samsunggavini
 
 on post-fs
 
