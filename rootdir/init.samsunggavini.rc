@@ -6,6 +6,8 @@ on fs
     swapon_all /fstab.samsunggavini
 
 on post-fs
+    
+    mkdir /data/mediaserver 0740 media media
 
     # Samsung Device permissions
     chown root system /dev/mmc328x
