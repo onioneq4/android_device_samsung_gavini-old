@@ -56,5 +56,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/adm.sqlite-u8500:system/etc/adm.sqlite-u8500
 
+PRODUCT_PACKAGES += \
+    Projector
+
 # Use non-open-source parts if present
 $(call inherit-product-if-exists, vendor/samsung/gavini/gavini-vendor.mk)
