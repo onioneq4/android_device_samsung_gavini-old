@@ -25,6 +25,10 @@ PRODUCT_COPY_FILES += \
 
 $(call inherit-product, device/common/gps/gps_eu_supl.mk)
 
+# TWRP
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/recovery/twrp.fstab:recovery/root/etc/twrp.fstab
+
 # Init files
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/init.u8500.rc:root/init.u8500.rc \
