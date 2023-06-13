@@ -1,8 +1,24 @@
+diff --git a/healthd/Android.mk b/healthd/Android.mk
+index 7db4ad5..cd91c42 100644
+--- a/healthd/Android.mk
++++ b/healthd/Android.mk
+@@ -69,9 +69,9 @@ ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
+ BOARD_HAL_STATIC_LIBRARIES ?= libhealthd.qcom
+ endif
+ 
+-# Symlink /charger to /sbin/healthd
++# Symlink /charger to /sbin/charger
+ LOCAL_POST_INSTALL_CMD := $(hide) mkdir -p $(TARGET_ROOT_OUT) \
+-    && rm -f $(TARGET_ROOT_OUT)/charger && ln -sf /sbin/healthd $(TARGET_ROOT_OUT)/charger
++    && rm -f $(TARGET_ROOT_OUT)/charger && ln -sf /sbin/charger $(TARGET_ROOT_OUT)/charger
+ 
+ include $(BUILD_EXECUTABLE)
+ 
 diff --git a/include/utils/Flattenable.h b/include/utils/Flattenable.h
 index 882a8b2..495b90d 100644
 --- a/include/utils/Flattenable.h
 +++ b/include/utils/Flattenable.h
-@@ -79,21 +79,35 @@ public:
+@@ -79,21 +79,35 @@ class FlattenableUtils {
   * Flattenable objects must implement this protocol.
   */
  
@@ -38,7 +54,7 @@ index 882a8b2..495b90d 100644
  
      // unflattens the object from buffer.
      // size should be equal to the value of getFlattenedSize() when the
-@@ -102,6 +116,13 @@ public:
+@@ -102,6 +116,13 @@ class Flattenable {
      // don't need to be dupped(). ie: the caller of unflatten doesn't
      // keep ownership. If a fd is not retained by unflatten() it must be
      // explicitly closed.
@@ -60,13 +76,120 @@ index 882a8b2..495b90d 100644
  
  /*
   * LightFlattenable is a protocol allowing object to serialize themselves out
+diff --git a/include/utils/VectorImpl.h b/include/utils/VectorImpl.h
+index 21ad71c..88c3a05 100644
+--- a/include/utils/VectorImpl.h
++++ b/include/utils/VectorImpl.h
+@@ -105,7 +105,19 @@ class VectorImpl
+     virtual void            do_splat(void* dest, const void* item, size_t num) const = 0;
+     virtual void            do_move_forward(void* dest, const void* from, size_t num) const = 0;
+     virtual void            do_move_backward(void* dest, const void* from, size_t num) const = 0;
+-    
++
++#ifdef NEEDS_VECTORIMPL_SYMBOLS
++    // take care of FBC...
++    virtual void            reservedVectorImpl1();
++    virtual void            reservedVectorImpl2();
++    virtual void            reservedVectorImpl3();
++    virtual void            reservedVectorImpl4();
++    virtual void            reservedVectorImpl5();
++    virtual void            reservedVectorImpl6();
++    virtual void            reservedVectorImpl7();
++    virtual void            reservedVectorImpl8();
++#endif
++
+ private:
+         void* _grow(size_t where, size_t amount);
+         void  _shrink(size_t where, size_t amount);
+@@ -156,6 +168,18 @@ class SortedVectorImpl : public VectorImpl
+ protected:
+     virtual int             do_compare(const void* lhs, const void* rhs) const = 0;
+ 
++#ifdef NEEDS_VECTORIMPL_SYMBOLS
++    // take care of FBC...
++    virtual void            reservedSortedVectorImpl1();
++    virtual void            reservedSortedVectorImpl2();
++    virtual void            reservedSortedVectorImpl3();
++    virtual void            reservedSortedVectorImpl4();
++    virtual void            reservedSortedVectorImpl5();
++    virtual void            reservedSortedVectorImpl6();
++    virtual void            reservedSortedVectorImpl7();
++    virtual void            reservedSortedVectorImpl8();
++#endif
++
+ private:
+             ssize_t         _indexOrderOf(const void* item, size_t* order = 0) const;
+ 
+diff --git a/init/Android.mk b/init/Android.mk
+index 85dfbfc..2a9604d 100644
+--- a/init/Android.mk
++++ b/init/Android.mk
+@@ -52,7 +52,10 @@ LOCAL_SRC_FILES:= \
+ 
+ SYSTEM_CORE_INIT_DEFINES := BOARD_CHARGING_MODE_BOOTING_LPM \
+     BOARD_CHARGING_CMDLINE_NAME \
+-    BOARD_CHARGING_CMDLINE_VALUE
++    BOARD_CHARGING_CMDLINE_VALUE \
++    BOARD_LPM_BOOT_ARGUMENT_NAME \
++    BOARD_LPM_BOOT_ARGUMENT_VALUE
++
+ 
+ $(foreach system_core_init_define,$(SYSTEM_CORE_INIT_DEFINES), \
+   $(if $($(system_core_init_define)), \
+diff --git a/init/init.cpp b/init/init.cpp
+index 58d7d34..9db6d57 100644
+--- a/init/init.cpp
++++ b/init/init.cpp
+@@ -75,6 +75,11 @@ static int property_triggers_enabled = 0;
+ #define BOARD_CHARGING_CMDLINE_VALUE "true"
+ #endif
+ 
++#ifndef BOARD_LPM_BOOT_ARGUMENT_NAME
++#define BOARD_LPM_BOOT_ARGUMENT_NAME "lpm_boot"
++#define BOARD_LPM_BOOT_ARGUMENT_VALUE "1"
++#endif
++
+ static char qemu[32];
+ static char battchg_pause[32];
+ 
+@@ -87,6 +92,8 @@ static time_t process_needs_restart;
+ 
+ static const char *ENV[32];
+ 
++static unsigned lpm_bootmode = 0;
++
+ bool waiting_for_exec = false;
+ 
+ static int epoll_fd = -1;
+@@ -792,6 +799,12 @@ static void import_kernel_nv(char *name, bool for_emulator)
+ 
+     if (!strcmp(name,"qemu")) {
+         strlcpy(qemu, value, sizeof(qemu));
++#ifdef BOARD_LPM_BOOT_ARGUMENT_NAME
++    } else if (!strcmp(name,BOARD_LPM_BOOT_ARGUMENT_NAME)) {
++        if (!strcmp(value,BOARD_LPM_BOOT_ARGUMENT_VALUE)) {
++            lpm_bootmode = 1;
++        }
++#endif
+     } else if (!strcmp(name,BOARD_CHARGING_CMDLINE_NAME)) {
+         strlcpy(battchg_pause, value, sizeof(battchg_pause));
+     } else if (!strncmp(name, "androidboot.", 12) && name_len > 12) {
+@@ -1004,7 +1017,7 @@ static void selinux_initialize(bool in_kernel_domain) {
+ 
+ static int charging_mode_booting(void) {
+ #ifndef BOARD_CHARGING_MODE_BOOTING_LPM
+-    return 0;
++    return lpm_bootmode;
+ #else
+     int f;
+     char cmb;
 diff --git a/libutils/Android.mk b/libutils/Android.mk
-index b1dc1f8..44f69c1 100644
+index 23a5c59..81bd733 100644
 --- a/libutils/Android.mk
 +++ b/libutils/Android.mk
-@@ -44,6 +44,12 @@ commonSources:= \
+@@ -39,6 +39,12 @@ commonSources:= \
  	VectorImpl.cpp \
- 	misc.cpp
+ 	misc.cpp \
  
 +
 +ifeq ($(BOARD_USES_STE_HARDWARE),true)
@@ -107,6 +230,43 @@ index 0000000..1f2ffaa
 +}
 +
 +}; // namespace android
--- 
-2.1.0
-
+diff --git a/libutils/VectorImpl.cpp b/libutils/VectorImpl.cpp
+index de65a6c..ffd552b 100644
+--- a/libutils/VectorImpl.cpp
++++ b/libutils/VectorImpl.cpp
+@@ -552,6 +552,17 @@ void VectorImpl::_do_move_backward(void* dest, const void* from, size_t num) con
+     do_move_backward(dest, from, num);
+ }
+ 
++#ifdef NEEDS_VECTORIMPL_SYMBOLS
++void VectorImpl::reservedVectorImpl1() { }
++void VectorImpl::reservedVectorImpl2() { }
++void VectorImpl::reservedVectorImpl3() { }
++void VectorImpl::reservedVectorImpl4() { }
++void VectorImpl::reservedVectorImpl5() { }
++void VectorImpl::reservedVectorImpl6() { }
++void VectorImpl::reservedVectorImpl7() { }
++void VectorImpl::reservedVectorImpl8() { }
++#endif
++
+ /*****************************************************************************/
+ 
+ SortedVectorImpl::SortedVectorImpl(size_t itemSize, uint32_t flags)
+@@ -667,6 +678,17 @@ ssize_t SortedVectorImpl::remove(const void* item)
+     return i;
+ }
+ 
++#ifdef NEEDS_VECTORIMPL_SYMBOLS
++void SortedVectorImpl::reservedSortedVectorImpl1() { };
++void SortedVectorImpl::reservedSortedVectorImpl2() { };
++void SortedVectorImpl::reservedSortedVectorImpl3() { };
++void SortedVectorImpl::reservedSortedVectorImpl4() { };
++void SortedVectorImpl::reservedSortedVectorImpl5() { };
++void SortedVectorImpl::reservedSortedVectorImpl6() { };
++void SortedVectorImpl::reservedSortedVectorImpl7() { };
++void SortedVectorImpl::reservedSortedVectorImpl8() { };
++#endif
++
+ /*****************************************************************************/
+ 
+ }; // namespace android

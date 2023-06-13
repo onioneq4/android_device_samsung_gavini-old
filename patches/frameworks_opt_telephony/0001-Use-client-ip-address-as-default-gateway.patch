@@ -2,7 +2,7 @@ diff --git a/src/java/com/android/internal/telephony/dataconnection/DataCallResp
 index ccae8d9..9de5980 100644
 --- a/src/java/com/android/internal/telephony/dataconnection/DataCallResponse.java
 +++ b/src/java/com/android/internal/telephony/dataconnection/DataCallResponse.java
-@@ -161,6 +161,8 @@ public class DataCallResponse {
+@@ -161,6 +161,8 @@ public SetupResult setLinkProperties(LinkProperties linkProperties,
                              if (DBG) Rlog.d(LOG_TAG, "addr/pl=" + addr + "/" + addrPrefixLen);
                              la = new LinkAddress(ia, addrPrefixLen);
                              linkProperties.addLinkAddress(la);
@@ -11,7 +11,7 @@ index ccae8d9..9de5980 100644
                          }
                      }
                  } else {
-@@ -203,28 +205,6 @@ public class DataCallResponse {
+@@ -203,28 +205,6 @@ public SetupResult setLinkProperties(LinkProperties linkProperties,
                      throw new UnknownHostException("Empty dns response and no system default dns");
                  }
  
@@ -40,6 +40,3 @@ index ccae8d9..9de5980 100644
                  // set interface MTU
                  // this may clobber the setting read from the APN db, but that's ok
                  linkProperties.setMtu(mtu);
--- 
-2.1.0
-
